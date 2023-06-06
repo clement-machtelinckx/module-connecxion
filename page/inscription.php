@@ -43,7 +43,7 @@ if (isset($_POST['submit'])){
         }
     }   
     else{
-        $erreur = "tout les chant doivent etre remplie";
+        $erreur = "tout les chanps doivent etre remplie";
     }
 }
     ?>

@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class=but-index>
-        <a href="page/connecxion.php">Connecxion</a>
+        <a href="page/connecxion.php">Connexion</a>
         <a href="page/inscription.php">Inscription</a>
     </div>
 
