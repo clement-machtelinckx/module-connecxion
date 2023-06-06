@@ -13,9 +13,19 @@ if (isset($_SESSION['id'])){
     $user = $requser->fetch();
     if(isset($_POST['newlogin']) AND !empty($_POST['newlogin']) AND $_POST['newlogin'] != $user['login']) {
         $newlogin = htmlspecialchars($_POST['newlogin']);
+
+        $checklogin = $bdd->prepare("SELECT * FROM utilisateurs WHERE login = ?");
+        $checklogin->execute(array($newlogin));
+        $existingLogin = $checklogin->fetch();
+        if (!$existingLogin){
         $insertlogin = $bdd->prepare("UPDATE utilisateurs SET login = ? WHERE id = ?");
         $insertlogin->execute(array($newlogin, $_SESSION['id']));
         header('Location: profil.php?id='.$_SESSION['id']);
+        }
+        else {
+            // Le nouveau login existe déjà, afficher un message d'erreur
+            $erreur = "Ce login est déjà utilisé par un autre utilisateur.";
+        }
      }
 
      if(isset($_POST['newprenom']) AND !empty($_POST['newprenom']) AND $_POST['newprenom'] != $user['prenom']) {
@@ -91,7 +101,7 @@ if (isset($_SESSION['id'])){
                         <label for="newpassword">Password : </label>
                     </td>
                     <td>
-                        <input type="text" id="newpassword" name="newpassword" placeholder="password">
+                        <input type="password" id="newpassword" name="newpassword" placeholder="password">
                     </td>
                 </tr>
                 <tr>
@@ -99,7 +109,7 @@ if (isset($_SESSION['id'])){
                         <label for="newpassword">Confime Password : </label>
                     </td>
                     <td>
-                        <input type="text" id="newpassword2" name="newpassword2" placeholder="confime password">
+                        <input type="password" id="newpassword2" name="newpassword2" placeholder="confime password">
                     </td>
                 </tr>
 
@@ -115,6 +125,11 @@ if (isset($_SESSION['id'])){
     else{
         header("location: connecxion.php");
     }
+    ?>
+        <?php
+        if(isset($erreur)){
+            echo $erreur ;
+        }
     ?>
     <a href="deconnecxion.php">deconnecxion</a>
 </body>

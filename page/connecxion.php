@@ -24,6 +24,9 @@ if (isset($_POST["submitconnect"])){
             $_SESSION['password'] = $userinfos['password'];
             header("location: profil.php?id=".$_SESSION['id']);
         }
+            if ($logconnect == "admin" && $mdpconnect == sha1("admin")) {
+                header("location: admin.php");
+            }
         else{
             $erreur = "mauvais Login ou password.";
         }
@@ -63,7 +66,7 @@ if (isset($_POST["submitconnect"])){
                         <label for="password">Password : </label>
                     </td>
                     <td>
-                        <input type="text" id="passwordconnect" name="passwordconnect" placeholder="password">
+                        <input type="password" id="passwordconnect" name="passwordconnect" placeholder="password">
                     </td>
                 </tr>
 

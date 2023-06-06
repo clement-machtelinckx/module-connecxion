@@ -92,7 +92,7 @@ if (isset($_POST['submit'])){
                         <label for="password">Password : </label>
                     </td>
                     <td>
-                        <input type="text" id="password" name="password" placeholder="password">
+                        <input type="password" id="password" name="password" placeholder="password">
                     </td>
                 </tr>
                 <tr>
@@ -100,7 +100,7 @@ if (isset($_POST['submit'])){
                         <label for="password">Confime Password : </label>
                     </td>
                     <td>
-                        <input type="text" id="password2" name="password2" placeholder="confime password">
+                        <input type="password" id="password2" name="password2" placeholder="confime password">
                     </td>
                 </tr>
 
