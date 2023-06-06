@@ -37,7 +37,7 @@ Nom = <?php echo $userinfos['nom'];?><br>
         <?php
         if (isset($_SESSION['id']) AND $userinfos['id'] == $_SESSION['id']){
             ?>
-            <a href="">editer le profil</a><br>
+            <a href="profil-modif.php">editer le profil</a><br>
             <a href="deconnecxion.php">se déconnecter</a>
         <?php
         }

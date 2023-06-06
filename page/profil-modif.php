@@ -7,11 +7,42 @@ $motDePasse = 'Clement2203$';
 $nomBaseDeDonnees = 'moduleconnecxion';
 
 $bdd = new PDO("mysql:host=$serveur;dbname=$nomBaseDeDonnees;charset=utf8", $nomUtilisateur, $motDePasse);
-if (isset($_GET['id']) AND $_GET['id'] > 0){
-    $getid = intval($_GET['id']);
+if (isset($_SESSION['id'])){
     $requser = $bdd -> prepare('SELECT * FROM utilisateurs WHERE id =?');
-    $requser -> execute(array($getid));
-    $userinfos = $requser -> fetch();
+    $requser -> execute(array($_SESSION['id']));
+    $user = $requser->fetch();
+    if(isset($_POST['newlogin']) AND !empty($_POST['newlogin']) AND $_POST['newlogin'] != $user['login']) {
+        $newlogin = htmlspecialchars($_POST['newlogin']);
+        $insertlogin = $bdd->prepare("UPDATE utilisateurs SET login = ? WHERE id = ?");
+        $insertlogin->execute(array($newlogin, $_SESSION['id']));
+        header('Location: profil.php?id='.$_SESSION['id']);
+     }
+
+     if(isset($_POST['newprenom']) AND !empty($_POST['newprenom']) AND $_POST['newprenom'] != $user['prenom']) {
+        $newprenom = htmlspecialchars($_POST['newprenom']);
+        $insertprenom = $bdd->prepare("UPDATE utilisateurs SET prenom = ? WHERE id = ?");
+        $insertprenom->execute(array($newprenom, $_SESSION['id']));
+        header('Location: profil.php?id='.$_SESSION['id']);
+     }
+
+     if(isset($_POST['newnom']) AND !empty($_POST['newnom']) AND $_POST['newnom'] != $user['nom']) {
+        $newnom = htmlspecialchars($_POST['newnom']);
+        $insertnom = $bdd->prepare("UPDATE utilisateurs SET nom = ? WHERE id = ?");
+        $insertnom->execute(array($newnom, $_SESSION['id']));
+        header('Location: profil.php?id='.$_SESSION['id']);
+     }
+
+     if(isset($_POST['newpassword']) AND !empty($_POST['newpassword']) AND isset($_POST['newpassword2']) AND !empty($_POST['newpassword2'])) {
+        $mdp1 = sha1($_POST['newpassword']);
+        $mdp2 = sha1($_POST['newpassword2']);
+        if($mdp1 == $mdp2) {
+           $insertmdp = $bdd->prepare("UPDATE utilisateurs SET password = ? WHERE id = ?");
+           $insertmdp->execute(array($mdp1, $_SESSION['id']));
+           header('Location: profil.php?id='.$_SESSION['id']);
+        } else {
+           $msg = "Vos deux mdp ne correspondent pas !";
+        }
+    }
     ?>
 
 
@@ -23,30 +54,67 @@ if (isset($_GET['id']) AND $_GET['id'] > 0){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/style_profil.css" media="screen">
 
-    <title>Profil</title>
+    <title>modifier - Profil</title>
 </head>
 <body>
 <div class="profil">
-<h2>Profil de <?php echo $userinfos['login'];?></h2>
+<h2>edition de mon profil</h2>
 <br /><br />
-Login = <?php echo $userinfos['login'];?><br>
-Prenom = <?php echo $userinfos['prenom'];?><br>
-Nom = <?php echo $userinfos['nom'];?><br>
+<form method="post" action="">
+            <table>
+                <tr>
+                    <td>
+                        <label for="newlogin">Login : </label>
+                    </td>
+                    <td>
+                        <input type="text" id="newlogin" name="newlogin" placeholder="login" value="<?php echo $user['login'] ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="newprenom">Prenom : </label>
+                    </td>
+                    <td>
+                        <input type="text" id="newprenom" name="newprenom" placeholder="prenom" value="<?php echo $user['prenom'] ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="newnom">Nom : </label>
+                    </td>
+                    <td>
+                        <input type="text" id="newnom" name="newnom" placeholder="nom" value="<?php echo $user['nom'] ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="newpassword">Password : </label>
+                    </td>
+                    <td>
+                        <input type="text" id="newpassword" name="newpassword" placeholder="password">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="newpassword">Confime Password : </label>
+                    </td>
+                    <td>
+                        <input type="text" id="newpassword2" name="newpassword2" placeholder="confime password">
+                    </td>
+                </tr>
 
-</div>
-        <?php
-        if (isset($_SESSION['id']) AND $userinfos['id'] == $_SESSION['id']){
-            ?>
-            <a href="">editer le profil</a><br>
-            <a href="deconnecxion.php">se déconnecter</a>
-        <?php
-        }
-        ?>
+            </table>
+            <input type="submit" id="newsubmit" name="newsubmit" value="Update profil">
+        </form>
 
     <?php
-        if(isset($erreur)){
-            echo $erreur ;
+        if(isset($msg)){
+            echo $msg ;
         }
     }
+    else{
+        header("location: connecxion.php");
+    }
     ?>
+    <a href="deconnecxion.php">deconnecxion</a>
 </body>
