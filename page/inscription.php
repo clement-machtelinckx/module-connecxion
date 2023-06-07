@@ -55,13 +55,13 @@ if (isset($_POST['submit'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style_inscription.css" media="screen">
+    <link rel="stylesheet" href="../style/style_inscription.css" media="screen">
 
     <title>inscription</title>
 </head>
 <body>
     <div class="inscrip">
-        <form method="post" action="">
+        <form class="formu" method="post" action="">
             <table>
                 <tr>
                     <td>
@@ -108,7 +108,7 @@ if (isset($_POST['submit'])){
             <input type="submit" id="submit" name="submit" value="Submit">
         </form>
         <a href="connecxion.php">deja inscrit ? connect toi !!</a>
-
+    </div>
     <?php
         if(isset($erreur)){
             echo $erreur ;
