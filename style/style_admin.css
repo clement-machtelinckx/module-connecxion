@@ -1,0 +1,22 @@
+body {
+    color: white;
+    background-color: black;
+    font-family: monospace;
+}
+.admin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    
+    
+}
+a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 0, 0);
+    padding: 20px;
+    border-radius: 10%;
+    font-family: monospace;
+}

@@ -51,7 +51,7 @@ if (isset($_POST["submitconnect"])){
 </head>
 <body>
     <div class="connec">
-        <form method="post" action="">
+        <form class="formuconnec" method="post" action="">
             <table>
                 <tr>
                     <td>

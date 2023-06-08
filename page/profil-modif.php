@@ -62,13 +62,13 @@ if (isset($_SESSION['id'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/style_profil.css" media="screen">
+    <link rel="stylesheet" href="../style/style_profil-modif.css" media="screen">
 
     <title>modifier - Profil</title>
 </head>
 <body>
 <div class="profil">
-<h2>edition de mon profil</h2>
+<h2>Edition de mon profil</h2>
 <br /><br />
 <form method="post" action="">
             <table>
@@ -116,7 +116,8 @@ if (isset($_SESSION['id'])){
             </table>
             <input type="submit" id="newsubmit" name="newsubmit" value="Update profil">
         </form>
-
+</div>
+<div class="msg">
     <?php
         if(isset($msg)){
             echo $msg ;
@@ -131,5 +132,8 @@ if (isset($_SESSION['id'])){
             echo $erreur ;
         }
     ?>
+</div>
+<div class="deco">
     <a href="deconnecxion.php">deconnecxion</a>
+</div>
 </body>
